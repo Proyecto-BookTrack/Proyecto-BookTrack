@@ -2,7 +2,7 @@
 
 ## Información del Usuario
 - **Nombre:** [Nombre del usuario]
-- **Fecha de registro:** [Fecha]
+- **Fecha de registro:** [dd/mm/aa]
 - **Libros Leídos:** [Número]
 - **Libros Pendientes:** [Número]
 
