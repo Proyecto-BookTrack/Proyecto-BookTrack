@@ -9,7 +9,7 @@
 ---
 
 ## 🖼️ Imagen de Perfil
-![Tu Imagen](example.jpg)
+(example.jpg)
 
 ---
 
