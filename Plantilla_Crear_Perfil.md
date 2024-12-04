@@ -8,7 +8,7 @@
 
 ---
 
-## 🖼️ Imagen de Perfil
+## 🖼️ Imagen de Perfil **NO ES OBLIGATORIO**
 ![Tu Imagen](example.jpg)
 
 ---
