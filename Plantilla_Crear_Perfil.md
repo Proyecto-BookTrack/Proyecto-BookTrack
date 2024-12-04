@@ -17,24 +17,29 @@
 
 ### ✅ Libros Leídos
 1. **[Título]**  
-   - Autor: [Autor]  
-   - Año: [Año]  
+   - Autor: [Autor]
+     
+   - Año: [Año]
+     
    - Género: [Género]
-   
+     
    - 📋 **Reseña:**  
      _"[Reseña personal]"_
 
 ---
 
 ### 📘 Leyendo Actualmente
-- **[Título]**  
-  - Autor: [Autor]  
+1. **[Título]**  
+  - Autor: [Autor]
+
   - Año: [Año]  
 
 ---
 
 ### 📂 Pendientes
 1. **[Título]**  
-   - Autor: [Autor]  
-   - Año: [Año]  
+   - Autor: [Autor]
+     
+   - Año: [Año]
+     
    - Género: [Género]  
