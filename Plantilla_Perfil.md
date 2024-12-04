@@ -9,7 +9,7 @@
 ---
 
 ## 🖼️ Imagen de Perfil
-![Tu Imagen](ruta/a/tu/imagen.png)
+![Tu Imagen](imagen.jpg)
 
 ---
 
