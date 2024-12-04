@@ -2,14 +2,14 @@
 
 ## Información del Usuario
 - **Nombre:** [Nombre del usuario]
-- **Fecha de registro:** [dd/mm/aa]
+- **Fecha de registro:** [Fecha]
 - **Libros Leídos:** [Número]
 - **Libros Pendientes:** [Número]
 
 ---
 
 ## 🖼️ Imagen de Perfil
-(example.jpg)
+![Tu Imagen](example.jpg)
 
 ---
 
@@ -19,7 +19,8 @@
 1. **[Título]**  
    - Autor: [Autor]  
    - Año: [Año]  
-   - Género: [Género]  
+   - Género: [Género]
+   
    - 📋 **Reseña:**  
      _"[Reseña personal]"_
 
