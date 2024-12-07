@@ -3,7 +3,7 @@ name: Crear README.md para nuevo usuario
 on:
   push:
     paths:
-      - 'Usuarios/**'  # Detecta cualquier cambio en la carpeta Usuarios
+      - 'Usuarios/**'
 
 jobs:
   create_readme:
@@ -15,11 +15,11 @@ jobs:
 
       - name: Crear README.md para nuevo usuario
         run: |
-          # Extraer el nombre del usuario desde la ruta del directorio
-          USER_DIR=$(echo ${GITHUB_EVENT_PATH} | sed 's/.*\/Usuarios\///g' | sed 's/\/.*//g')
+          # Obtener la ruta completa del directorio del usuario
+          USER_DIR_PATH=$(echo ${GITHUB_EVENT_PATH} | sed 's/.*\/Usuarios\///')
 
-          # Crear la ruta completa para el nuevo directorio del usuario
-          USER_DIR_PATH="Usuarios/${USER_DIR}"
+          # Extraer solo el nombre de la carpeta
+          USER_DIR=$(basename "${USER_DIR_PATH}")
 
           # Crear el archivo README.md con las instrucciones para el nuevo usuario
           echo "# Bienvenido a tu perfil en BookTrack, ${USER_DIR}!" > "${USER_DIR_PATH}/README.md"
