@@ -3,7 +3,7 @@
 Para registrarte como usuario, sigue estas instrucciones:
 
 1. Clona el repositorio.
-2. Crea una carpeta en `usuarios/`.
+2. Crea una carpeta en `Usuarios/`.
 3. Añade un archivo PERFIL.md con tu información de perfil.
 4. Haz un pull request para validar tu registro.
 
