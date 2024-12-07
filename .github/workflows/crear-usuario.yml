@@ -13,6 +13,9 @@ jobs:
       - name: Checkout repositorio
         uses: actions/checkout@v2
 
+      - name: Instalar jq
+        run: sudo apt-get install -y jq
+
       - name: Configurar identidad de usuario de Git
         run: |
           git config --global user.email "your-email@example.com"
@@ -20,22 +23,25 @@ jobs:
 
       - name: Crear README.md para nuevo usuario
         run: |
-          # Verificar el contenido de ${GITHUB_EVENT_PATH} para ver qué contiene
+          # Verificar el contenido de ${GITHUB_EVENT_PATH} para depuración
           echo "GITHUB_EVENT_PATH: ${GITHUB_EVENT_PATH}"
 
-          # Extraer solo el nombre de la carpeta del usuario (como 'PruebaNombre10')
-          USER_DIR_PATH=$(basename $(dirname ${GITHUB_EVENT_PATH}))
+          # Obtener la ruta relativa del archivo/directorio que activó el evento
+          AFFECTED_PATH=$(jq -r '.commits[0].added[0] // .commits[0].modified[0] // empty' "${GITHUB_EVENT_PATH}")
 
-          # Depuración: Verificar que la ruta del usuario esté correcta
-          echo "USER_DIR_PATH: ${USER_DIR_PATH}"
+          # Extraer el directorio del usuario desde la ruta afectada
+          USER_DIR=$(echo "${AFFECTED_PATH}" | grep -oE '^Usuarios/[^/]+' | head -n 1)
 
-          # Asegurarse de que la ruta no sea vacía
-          if [ -n "$USER_DIR_PATH" ]; then
-            # Crear la ruta completa para el directorio del usuario
-            USER_DIR="Usuarios/${USER_DIR_PATH}"
+          # Depuración: Verificar si USER_DIR fue identificado correctamente
+          echo "USER_DIR: ${USER_DIR}"
 
-            # Crear el archivo README.md con las instrucciones para el nuevo usuario
-            echo "# Bienvenido a tu perfil en BookTrack, ${USER_DIR_PATH}!" > "${USER_DIR}/README.md"
+          # Asegurarse de que USER_DIR no esté vacío
+          if [ -n "$USER_DIR" ]; then
+            # Crear el directorio si no existe
+            mkdir -p "${USER_DIR}"
+
+            # Crear el archivo README.md con las instrucciones
+            echo "# Bienvenido a tu perfil en BookTrack, $(basename ${USER_DIR})!" > "${USER_DIR}/README.md"
             echo "" >> "${USER_DIR}/README.md"
             echo "## Pasos para comenzar:" >> "${USER_DIR}/README.md"
             echo "1. **Sube tus libros** 📚" >> "${USER_DIR}/README.md"
@@ -47,9 +53,9 @@ jobs:
 
             # Hacer commit y push de los cambios
             git add "${USER_DIR}/README.md"
-            git commit -m "Crear README.md para el usuario ${USER_DIR_PATH}"
+            git commit -m "Crear README.md para el usuario $(basename ${USER_DIR})"
             git push
           else
-            echo "No se pudo identificar la ruta del usuario"
+            echo "No se pudo identificar la ruta del usuario desde el evento"
             exit 1
-          fi  # Cierra el bloque if
+          fi
