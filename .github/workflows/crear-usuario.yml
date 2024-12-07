@@ -20,8 +20,11 @@ jobs:
 
       - name: Crear README.md para nuevo usuario
         run: |
-          # Obtener el nombre de la carpeta del usuario desde el evento
-          USER_DIR_PATH=$(echo ${GITHUB_EVENT_PATH} | sed 's/.*\/Usuarios\///')
+          # Verificar el contenido de ${GITHUB_EVENT_PATH} para ver qué contiene
+          echo "GITHUB_EVENT_PATH: ${GITHUB_EVENT_PATH}"
+
+          # Extraer solo el nombre de la carpeta del usuario (como 'PruebaNombre10')
+          USER_DIR_PATH=$(basename $(dirname ${GITHUB_EVENT_PATH}))
 
           # Depuración: Verificar que la ruta del usuario esté correcta
           echo "USER_DIR_PATH: ${USER_DIR_PATH}"
@@ -49,4 +52,4 @@ jobs:
           else
             echo "No se pudo identificar la ruta del usuario"
             exit 1
-          fi
+          fi  # Cierra el bloque if
