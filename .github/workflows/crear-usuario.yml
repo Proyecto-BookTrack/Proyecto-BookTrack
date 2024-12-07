@@ -1,0 +1,32 @@
+name: Crear README.md para nuevo usuario
+
+on:
+  create:
+    paths:
+      - 'Usuarios/**'
+
+jobs:
+  create_readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v2
+
+      - name: Crear README.md para nuevo usuario
+        run: |
+          USER_DIR=$(echo ${GITHUB_EVENT_PATH} | sed 's/.*\/Usuarios\///g' | sed 's/\/.*//g')
+          USER_DIR_PATH="Usuarios/${USER_DIR}"
+          echo "# Bienvenido a tu perfil en BookTrack, ${USER_DIR}!" > "${USER_DIR_PATH}/README.md"
+          echo "" >> "${USER_DIR_PATH}/README.md"
+          echo "## Pasos para comenzar:" >> "${USER_DIR_PATH}/README.md"
+          echo "1. **Sube tus libros** 📚" >> "${USER_DIR_PATH}/README.md"
+          echo "   Crea un archivo con el nombre del libro y detalles (autor, descripción, etc.) dentro de la carpeta `Libros/`." >> "${USER_DIR_PATH}/README.md"
+          echo "2. **Únete a un club** 📖" >> "${USER_DIR_PATH}/README.md"
+          echo "   Visita la carpeta `Clubs/` y únete al club que más te interese." >> "${USER_DIR_PATH}/README.md"
+          echo "3. **Actualiza tu perfil** ✍️" >> "${USER_DIR_PATH}/README.md"
+          echo "   Actualiza tu archivo `PERFIL.md` con la información de tus libros y clubes." >> "${USER_DIR_PATH}/README.md"
+          
+          git add "${USER_DIR_PATH}/README.md"
+          git commit -m "Crear README.md para el usuario ${USER_DIR}"
+          git push
