@@ -1,4 +1,4 @@
-name: Crear PERFIL.md para nuevo usuario
+name: Crear README.md para nuevo usuario
 
 on:
   push:
@@ -6,14 +6,14 @@ on:
       - 'Usuarios/**'
 
 jobs:
-  create_profile:
+  create_readme:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repositorio
         uses: actions/checkout@v2
 
-      - name: Crear PERFIL.md para nuevo usuario
+      - name: Crear README.md para nuevo usuario
         run: |
           # Obtener el nombre de la carpeta del usuario desde el evento
           USER_DIR_PATH=$(echo ${GITHUB_EVENT_PATH} | sed 's/.*\/Usuarios\///')
@@ -26,20 +26,20 @@ jobs:
             # Crear la ruta completa para el directorio del usuario
             USER_DIR="Usuarios/${USER_DIR_PATH}"
 
-            # Crear el archivo PERFIL.md con las instrucciones para el nuevo usuario
-            echo "# Bienvenido a tu perfil en BookTrack, ${USER_DIR_PATH}!" > "${USER_DIR}/PERFIL.md"
-            echo "" >> "${USER_DIR}/PERFIL.md"
-            echo "## Pasos para comenzar:" >> "${USER_DIR}/PERFIL.md"
-            echo "1. **Sube tus libros** 📚" >> "${USER_DIR}/PERFIL.md"
-            echo "   Crea un archivo con el nombre del libro y detalles (autor, descripción, etc.) dentro de la carpeta \`Libros/\`." >> "${USER_DIR}/PERFIL.md"
-            echo "2. **Únete a un club** 📖" >> "${USER_DIR}/PERFIL.md"
-            echo "   Visita la carpeta \`Clubs/\` y únete al club que más te interese." >> "${USER_DIR}/PERFIL.md"
-            echo "3. **Actualiza tu perfil** ✍️" >> "${USER_DIR}/PERFIL.md"
-            echo "   Actualiza tu archivo \`PERFIL.md\` con la información de tus libros y clubes." >> "${USER_DIR}/PERFIL.md"
+            # Crear el archivo README.md con las instrucciones para el nuevo usuario
+            echo "# Bienvenido a tu perfil en BookTrack, ${USER_DIR_PATH}!" > "${USER_DIR}/README.md"
+            echo "" >> "${USER_DIR}/README.md"
+            echo "## Pasos para comenzar:" >> "${USER_DIR}/README.md"
+            echo "1. **Sube tus libros** 📚" >> "${USER_DIR}/README.md"
+            echo "   Crea un archivo con el nombre del libro y detalles (autor, descripción, etc.) dentro de la carpeta \`Libros/\`." >> "${USER_DIR}/README.md"
+            echo "2. **Únete a un club** 📖" >> "${USER_DIR}/README.md"
+            echo "   Visita la carpeta \`Clubs/\` y únete al club que más te interese." >> "${USER_DIR}/README.md"
+            echo "3. **Actualiza tu perfil** ✍️" >> "${USER_DIR}/README.md"
+            echo "   Actualiza tu archivo \`PERFIL.md\` con la información de tus libros y clubes." >> "${USER_DIR}/README.md"
 
             # Hacer commit y push de los cambios
-            git add "${USER_DIR}/PERFIL.md"
-            git commit -m "Crear PERFIL.md para el usuario ${USER_DIR_PATH}"
+            git add "${USER_DIR}/README.md"
+            git commit -m "Crear README.md para el usuario ${USER_DIR_PATH}"
             git push
           else
             echo "No se pudo identificar la ruta del usuario"
