@@ -1,5 +1,3 @@
-# ��� Perfil del Usuaro
-
 ## Información del Usuario
 - **Nombre:** [Angel Jimenez]
 - **Fecha de registro:** [07/12/2024]
