@@ -25,9 +25,13 @@ jobs:
         run: |
           # Verificar el contenido de ${GITHUB_EVENT_PATH} para depuración
           echo "GITHUB_EVENT_PATH: ${GITHUB_EVENT_PATH}"
+          cat "${GITHUB_EVENT_PATH}"
 
           # Obtener la ruta relativa del archivo/directorio que activó el evento
           AFFECTED_PATH=$(jq -r '.commits[0].added[0] // .commits[0].modified[0] // empty' "${GITHUB_EVENT_PATH}")
+
+          # Depuración: Mostrar la ruta afectada
+          echo "AFFECTED_PATH: ${AFFECTED_PATH}"
 
           # Extraer el directorio del usuario desde la ruta afectada
           USER_DIR=$(echo "${AFFECTED_PATH}" | grep -oE '^Usuarios/[^/]+' | head -n 1)
@@ -37,8 +41,14 @@ jobs:
 
           # Asegurarse de que USER_DIR no esté vacío
           if [ -n "$USER_DIR" ]; then
+            echo "Directorio de usuario identificado: ${USER_DIR}"
+
             # Crear el directorio si no existe
             mkdir -p "${USER_DIR}"
+
+            # Depuración: Confirmar creación del directorio
+            echo "Contenido del directorio Usuarios/"
+            ls Usuarios/
 
             # Crear el archivo README.md con las instrucciones
             echo "# Bienvenido a tu perfil en BookTrack, $(basename ${USER_DIR})!" > "${USER_DIR}/README.md"
@@ -51,11 +61,17 @@ jobs:
             echo "3. **Actualiza tu perfil** ✍️" >> "${USER_DIR}/README.md"
             echo "   Actualiza tu archivo \`PERFIL.md\` con la información de tus libros y clubes." >> "${USER_DIR}/README.md"
 
+            # Depuración: Mostrar el contenido de README.md
+            echo "Contenido del archivo ${USER_DIR}/README.md"
+            cat "${USER_DIR}/README.md"
+
             # Hacer commit y push de los cambios
             git add "${USER_DIR}/README.md"
             git commit -m "Crear README.md para el usuario $(basename ${USER_DIR})"
             git push
           else
             echo "No se pudo identificar la ruta del usuario desde el evento"
+            echo "Contenido del evento (depuración):"
+            cat "${GITHUB_EVENT_PATH}"
             exit 1
           fi
