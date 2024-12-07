@@ -1,4 +1,4 @@
-#🤵🏼 Bienvenido a BookTrack
+🤵🏼# Bienvenido a BookTrack
 
 Para registrarte como usuario, sigue estas instrucciones:
 
