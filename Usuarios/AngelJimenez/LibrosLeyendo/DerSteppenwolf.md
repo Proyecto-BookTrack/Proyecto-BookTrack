@@ -1,12 +1,15 @@
-Título: El Nombre del Viento (Título original: The Name of the Wind)
+Título: El lobo estepario (Título original: Der Steppenwolf)
 
-Autor: Patrick Rothfuss
+Autor: Hermann Hesse
 
-Género: Fantasía épica
+Género: Novela filosófica / Drama existencial
 
-Fecha de publicación: 27 de marzo de 2007
+Fecha de publicación: 1927
+
+---
 
 ## Evolución del Estado
 | Fecha       | Estado       | Nota                                      |
 |-------------|--------------|-------------------------------------------|
 | 2023-10-05  | Pendiente    | Libro añadido a la lista inicial.         |
+| 2023-10-05  | Leyendo      | Cambio el estado del libro a leyendo      |

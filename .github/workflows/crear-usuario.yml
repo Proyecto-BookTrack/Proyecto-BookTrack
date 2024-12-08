@@ -1,0 +1,77 @@
+name: Crear README.md para nuevo usuario
+
+on:
+  push:
+    paths:
+      - 'Usuarios/**'
+
+jobs:
+  create_readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v2
+
+      - name: Instalar jq
+        run: sudo apt-get install -y jq
+
+      - name: Configurar identidad de usuario de Git
+        run: |
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "Your Name"
+
+      - name: Crear README.md para nuevo usuario
+        run: |
+          # Verificar el contenido de ${GITHUB_EVENT_PATH} para depuración
+          echo "GITHUB_EVENT_PATH: ${GITHUB_EVENT_PATH}"
+          cat "${GITHUB_EVENT_PATH}"
+
+          # Obtener la ruta relativa del archivo/directorio que activó el evento
+          AFFECTED_PATH=$(jq -r '.commits[0].added[0] // .commits[0].modified[0] // empty' "${GITHUB_EVENT_PATH}")
+
+          # Depuración: Mostrar la ruta afectada
+          echo "AFFECTED_PATH: ${AFFECTED_PATH}"
+
+          # Extraer el directorio del usuario desde la ruta afectada
+          USER_DIR=$(echo "${AFFECTED_PATH}" | grep -oE '^Usuarios/[^/]+' | head -n 1)
+
+          # Depuración: Verificar si USER_DIR fue identificado correctamente
+          echo "USER_DIR: ${USER_DIR}"
+
+          # Asegurarse de que USER_DIR no esté vacío
+          if [ -n "$USER_DIR" ]; then
+            echo "Directorio de usuario identificado: ${USER_DIR}"
+
+            # Crear el directorio si no existe
+            mkdir -p "${USER_DIR}"
+
+            # Depuración: Confirmar creación del directorio
+            echo "Contenido del directorio Usuarios/"
+            ls Usuarios/
+
+            # Crear el archivo README.md con las instrucciones
+            echo "# Bienvenido a tu perfil en BookTrack, $(basename ${USER_DIR})!" > "${USER_DIR}/README.md"
+            echo "" >> "${USER_DIR}/README.md"
+            echo "## Pasos para comenzar:" >> "${USER_DIR}/README.md"
+            echo "1. **Sube tus libros** 📚" >> "${USER_DIR}/README.md"
+            echo "   Crea un archivo con el nombre del libro y detalles (autor, descripción, etc.) dentro de la carpeta \`Libros/\`." >> "${USER_DIR}/README.md"
+            echo "2. **Únete a un club** 📖" >> "${USER_DIR}/README.md"
+            echo "   Visita la carpeta \`Clubs/\` y únete al club que más te interese." >> "${USER_DIR}/README.md"
+            echo "3. **Actualiza tu perfil** ✍️" >> "${USER_DIR}/README.md"
+            echo "   Actualiza tu archivo \`PERFIL.md\` con la información de tus libros y clubes." >> "${USER_DIR}/README.md"
+
+            # Depuración: Mostrar el contenido de README.md
+            echo "Contenido del archivo ${USER_DIR}/README.md"
+            cat "${USER_DIR}/README.md"
+
+            # Hacer commit y push de los cambios
+            git add "${USER_DIR}/README.md"
+            git commit -m "Crear README.md para el usuario $(basename ${USER_DIR})"
+            git push
+          else
+            echo "No se pudo identificar la ruta del usuario desde el evento"
+            echo "Contenido del evento (depuración):"
+            cat "${GITHUB_EVENT_PATH}"
+            exit 1
+          fi
