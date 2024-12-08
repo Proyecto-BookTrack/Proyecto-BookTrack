@@ -1,4 +1,4 @@
-# Bienvenido a **BookTrack** 👋📚
+# Bienvenido a **BookTrack** 👋
 
 ¡Gracias por visitar nuestro repositorio! Para comenzar a formar parte de **BookTrack** y poder registrar tus libros, sigue los pasos a continuación.
 
