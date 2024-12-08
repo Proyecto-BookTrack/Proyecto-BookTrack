@@ -5,27 +5,30 @@ on:
     types: [opened]
 
 jobs:
-  verificar-usuario:
+  verificar-registro:
     runs-on: ubuntu-latest
     steps:
       # Paso 1: Clonar el repositorio
       - name: Clonar el repositorio
         uses: actions/checkout@v3
 
-      # Paso 2: Validar si el usuario está en USUARIOS.md
-      - name: Validar usuario registrado
+      # Paso 2: Verificar si el usuario ha creado su carpeta y archivo PERFIL.md
+      - name: Validar registro del usuario
         run: |
-          echo "Verificando si el usuario está registrado..."
-          if grep -q ${{ github.actor }} USUARIOS.md; then
-            echo "✅ El usuario ${{ github.actor }} está registrado."
+          echo "Verificando registro del usuario ${{ github.actor }}..."
+          CARPETA="Usuarios/${{ github.actor }}"
+          PERFIL="$CARPETA/PERFIL.md"
+
+          if [ -d "$CARPETA" ] && [ -f "$PERFIL" ]; then
+            echo "✅ Usuario registrado: Se encontró la carpeta $CARPETA y el archivo PERFIL.md."
           else
-            echo "❌ El usuario ${{ github.actor }} NO está registrado."
-            echo "Por favor, regístrate agregando tu nombre a USUARIOS.md."
+            echo "❌ Usuario NO registrado: No se encontró la carpeta $CARPETA o el archivo PERFIL.md."
+            echo "Para registrarte, crea la carpeta $CARPETA y añade un archivo PERFIL.md con tu información."
             exit 1
           fi
 
       # Paso 3: Confirmar el rol (opcional)
-      - name: Asignar rol según usuario
+      - name: Asignar rol según registro
         run: |
           if [[ ${{ github.actor }} == "admin_user" ]]; then
             echo "Rol asignado: Administrador."
