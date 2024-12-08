@@ -15,6 +15,6 @@ Además, la forma en que el libro aborda la identidad, la empatía y el deseo de
 ## Evolución del Estado
 | Fecha       | Estado       | Nota                                  |
 |-------------|--------------|---------------------------------------|
-| 2023-10-05  | Pendiente    | Libro añadido a la lista inicial. |          
-| 2023-10-05  | Leyendo      | Cambio el estado del libro a leyendo |
-| 2024-11-05  | Leído        | Cambio el estado del libro a leído |
+| 2023-10-05  | Pendiente    | Libro añadido a la lista inicial.          |          
+| 2023-10-05  | Leyendo  | Cambio el estado del libro a leyendo     |
+| 2024-11-05  | Leído    | Cambio el estado del libro a leído |
