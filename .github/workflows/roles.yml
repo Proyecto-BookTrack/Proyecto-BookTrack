@@ -1,0 +1,34 @@
+name: Gestionar Roles
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  verificar-usuario:
+    runs-on: ubuntu-latest
+    steps:
+      # Paso 1: Clonar el repositorio
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      # Paso 2: Validar si el usuario está en USUARIOS.md
+      - name: Validar usuario registrado
+        run: |
+          echo "Verificando si el usuario está registrado..."
+          if grep -q ${{ github.actor }} USUARIOS.md; then
+            echo "✅ El usuario ${{ github.actor }} está registrado."
+          else
+            echo "❌ El usuario ${{ github.actor }} NO está registrado."
+            echo "Por favor, regístrate agregando tu nombre a USUARIOS.md."
+            exit 1
+          fi
+
+      # Paso 3: Confirmar el rol (opcional)
+      - name: Asignar rol según usuario
+        run: |
+          if [[ ${{ github.actor }} == "admin_user" ]]; then
+            echo "Rol asignado: Administrador."
+          else
+            echo "Rol asignado: Usuario."
+          fi
