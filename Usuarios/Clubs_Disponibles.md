@@ -11,4 +11,4 @@ Aquí están los clubes de lectura a los que puedes unirte:
 - [Club Policíaco](../../Clubs/Policíaca)
 - [Club Romántico](../../Clubs/Romántica)
 - [Club de Teatro](../../Clubs/Teatro)
-- [Club de Terror](../../Clubs/Terror)
+- [Club de Terror](../Clubs/Terror)
