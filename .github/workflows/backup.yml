@@ -1,0 +1,27 @@
+name: Backup cada Commit
+
+on:
+  push:
+    branches:
+      - main  # Puedes ajustar la rama si usas otras, por ejemplo: 'Visitante', 'Usuarios', etc.
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio principal
+        uses: actions/checkout@v2
+
+      - name: Configuración de Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Hacer un commit en el repositorio de copia de seguridad
+        run: |
+          git remote add backup https://github.com/TuUsuario/BookTrack-Backup.git
+          git fetch backup
+          git checkout main || git checkout -b main
+          git pull backup main || true  # Asegura que si la rama no existe, la crea
+          git push backup main
