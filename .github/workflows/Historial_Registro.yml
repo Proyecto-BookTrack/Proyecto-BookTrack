@@ -1,0 +1,48 @@
+name: Backup and Audit Changes with History
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  backup_changes:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2. Record the last 100 commits into a file
+    - name: Generate Change Log with Last 100 Commits
+      run: |
+        TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+        echo "Change Log generated on $TIMESTAMP" > change_log.txt
+        echo "Last 100 Commits:" >> change_log.txt
+        git log -n 100 --pretty=format:"%h | %an | %ad | %s" --date=short >> change_log.txt
+        echo -e "\n--- End of Log ---\n" >> change_log.txt
+
+    # 3. Commit and push change log to a backup branch
+    - name: Push changes to backup branch
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git checkout -b backup-branch
+        git add change_log.txt
+        git commit -m "Backup Change Log $(date +"%Y-%m-%d %H:%M:%S")"
+        git push origin backup-branch --force
+
+    # (Optional) Upload the log to a storage system like AWS S3
+    - name: Upload to AWS S3
+      uses: jakejarvis/s3-sync-action@v0.5.1
+      with:
+        args: --acl public-read
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'
