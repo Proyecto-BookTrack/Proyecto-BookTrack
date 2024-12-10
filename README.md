@@ -13,8 +13,8 @@ Para interactuar con el contenido y tener acceso a áreas colaborativas, **debes
    Clona el repositorio de BookTrack a tu máquina local con el siguiente comando:
    ```bash
    
-   git clone https://github.com/[nombre_de_usuario]/Proyecto-BookTrack-.git
-   cd Proyecto-BookTrack-
+   git clone https://github.com/[nombre_de_usuario]/Proyecto-BookTrack.git
+   cd Proyecto-BookTrack
    
 3. **Crea una carpeta en `Usuarios/`** 📂  
    Dentro de la carpeta `Usuarios/`, crea una nueva carpeta con tu nombre de usuario.
